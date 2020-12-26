@@ -30,13 +30,26 @@
 
 (global-set-key (kbd "C-t") 'other-window)
 
-(require 'linum)
-(global-linum-mode t)
+(global-display-line-numbers-mode)
 
 (line-number-mode t)
 (column-number-mode t)
 
-(load-theme 'sanityinc-tomorrow-night)
+;;(load-theme 'sanityinc-tomorrow-night)
+(require 'doom-themes)
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+(load-theme 'doom-one)
+
+;; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+  
+;; Enable custom neotree theme (all-the-icons must be installed!)
+(doom-themes-neotree-config)
+  
+;; Corrects (and improves) org-mode's native fontification.
+(doom-themes-org-config)
 
 (when (require 'multi-term)
   (setq multi-term-program "/bin/zsh"))
@@ -137,3 +150,21 @@
 (setq twittering-use-master-password t)
 (setq epa-pinentry-mode 'loopback)
 (defalias 'epa--decode-coding-string 'decode-coding-string)
+
+(require 'which-key)
+(which-key-mode)
+
+(require 'volatile-highlights)
+(volatile-highlights-mode t)
+
+(beacon-mode t)
+
+(setq beacon-color "#1e90ff")
+
+(require 'git-gutter)
+
+;; If you enable global minor mode
+(global-git-gutter-mode t)
+
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
