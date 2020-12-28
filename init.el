@@ -30,7 +30,13 @@
 
 (global-set-key (kbd "C-t") 'other-window)
 
-(global-display-line-numbers-mode)
+(defun enable-line-numbers ()
+  "Turn on line number display."
+  (setq-local display-line-numbers t))
+
+;; explicitly enable line numbers modes
+(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (add-hook hook #'enable-line-numbers))
 
 (line-number-mode t)
 (column-number-mode t)
@@ -53,6 +59,8 @@
 
 (when (require 'multi-term)
   (setq multi-term-program "/bin/zsh"))
+
+(multi-term-dedicated-open)
 
 (set-face-attribute 'default nil
 		    :family "MesloLGS NF"
