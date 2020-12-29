@@ -186,5 +186,8 @@
 (add-to-list 'golden-ratio-exclude-buffer-names " *NeoTree*")
 
 (setq case-fold-search t)
+(setq completion-ignore-case t)
+バッファ自動再読み込み
+(global-auto-revert-mode 1)
 
 (add-hook 'after-init-hook 'global-company-mode)
