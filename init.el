@@ -186,3 +186,5 @@
 (add-to-list 'golden-ratio-exclude-buffer-names " *NeoTree*")
 
 (setq case-fold-search t)
+
+(add-hook 'after-init-hook 'global-company-mode)
