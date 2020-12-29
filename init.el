@@ -30,6 +30,8 @@
 
 (global-set-key (kbd "C-t") 'other-window)
 
+(setenv "TERM" "xterm-256color")
+
 (defun enable-line-numbers ()
   "Turn on line number display."
   (setq-local display-line-numbers t))
@@ -113,6 +115,9 @@
 ;; scratchの初期メッセージ消去
 (setq initial-scratch-message "")
 
+;; スクロールは1行ごとに
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 5)))
+
 ;; スクロールの加速をやめる
 (setq mouse-wheel-progressive-speed nil)
 
@@ -176,3 +181,8 @@
 
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+(golden-ratio-mode t)
+(add-to-list 'golden-ratio-exclude-buffer-names " *NeoTree*")
+
+(setq case-fold-search t)
