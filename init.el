@@ -1,3 +1,11 @@
+;;; init.el
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
 (defun add-to-load-path (&rest paths)
   (let (path)
     (dolist (path paths paths)
@@ -9,12 +17,8 @@
 
 (add-to-load-path "elisp" "conf" "public_repos")
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
@@ -60,7 +64,7 @@
 (doom-themes-org-config)
 
 (when (require 'multi-term)
-  (setq multi-term-program "/bin/zsh"))
+  (custom-set-variables '(multi-term-program "/bin/zsh")))
 
 (multi-term-dedicated-open)
 
@@ -161,7 +165,7 @@
 (require 'twittering-mode)
 (setq twittering-icon-mode t)
 (setq twittering-use-master-password t)
-(setq epa-pinentry-mode 'loopback)
+(setq epg-pinentry-mode 'loopback)
 (defalias 'epa--decode-coding-string 'decode-coding-string)
 
 (require 'which-key)
@@ -172,7 +176,7 @@
 
 (beacon-mode t)
 
-(setq beacon-color "#1e90ff")
+(custom-set-variables '( beacon-color "#1e90ff"))
 
 (require 'git-gutter)
 
@@ -183,7 +187,7 @@
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (golden-ratio-mode t)
-(add-to-list 'golden-ratio-exclude-buffer-names " *NeoTree*")
+;(add-to-list 'golden-ratio-exclude-buffer-names " *NeoTree*")
 
 (setq case-fold-search t)
 (setq completion-ignore-case t)
@@ -196,3 +200,20 @@
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
+
+(require 'flycheck)
+(setq flycheck-emacs-lisp-load-path 'inherit)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Flycheck errors*" eos)
+              (display-buffer-reuse-window
+               display-buffer-in-side-window)
+              (side            . bottom)
+              (reusable-frames . visible)
+              (window-height   . 0.30)))
+
+(require 'undohist)
+(undohist-initialize)
