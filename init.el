@@ -47,6 +47,9 @@
 (line-number-mode t)
 (column-number-mode t)
 
+(require 'elscreen)
+(elscreen-start)
+
 ;;(load-theme 'sanityinc-tomorrow-night)
 (require 'doom-themes)
 (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -66,7 +69,7 @@
 (when (require 'multi-term)
   (custom-set-variables '(multi-term-program "/bin/zsh")))
 
-(multi-term-dedicated-open)
+;; (multi-term-dedicated-open)
 
 (set-face-attribute 'default nil
 		    :family "MesloLGS NF"
@@ -83,15 +86,15 @@
 (setq neo-show-hidden-files t)
 (setq neo-smart-open t)
 
-(defun show-neotree ()
-  "open neotree without change a buffer"
-  (let ((cw (selected-window)))
-    (neotree-show)
-    (select-window cw)
-  )
-)
+;; (defun show-neotree ()
+;;   "open neotree without change a buffer"
+;;   (let ((cw (selected-window)))
+;;     (neotree-show)
+;;     (select-window cw)
+;;   )
+;; )
 
-(add-hook 'emacs-startup-hook 'show-neotree)
+;; (add-hook 'emacs-startup-hook 'show-neotree)
 
 (require 'powerline)
 (powerline-center-theme)
@@ -217,3 +220,6 @@
 
 (require 'undohist)
 (undohist-initialize)
+
+(setq gtags-suggested-key-mapping t)
+(setq gtags-auto-update t)
